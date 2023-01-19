@@ -25,12 +25,22 @@ export default function SignIn(props) {
     handleClose();
     openSignupForm();
   };
-  const intialValues = { email: "", password: "" };
+  const intialValues = { email: "", hash: "" };
   const [formValues, setFormValues] = React.useState(intialValues);
   const [formErrors, setFormErrors] = React.useState({});
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const submitForm = () => {
-    console.log(formValues);
+    fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log("Login successful");
+      }
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,8 +62,8 @@ export default function SignIn(props) {
     } else if (!regexEmail.test(values.email)) {
       errors.email = "Invalid email format";
     }
-    if (!values.password) {
-      errors.password = "Cannot be blank";
+    if (!values.hash) {
+      errors.hash = "Cannot be blank";
     }
     return errors;
   };
@@ -116,18 +126,18 @@ export default function SignIn(props) {
             <input
               type="password"
               id="password"
-              name="password"
+              name="hash"
               value={formValues.password}
               onChange={handleChange}
               placeholder="Password"
-              className={formErrors.password && "input-error"}
+              className={formErrors.hash && "input-error"}
             />
-            {formErrors.password && (
+            {formErrors.hash && (
               <span
                 className="error"
                 style={{ color: "red", fontSize: "13px" }}
               >
-                {formErrors.password}
+                {formErrors.hash}
               </span>
             )}
           </div>
