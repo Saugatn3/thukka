@@ -14,23 +14,11 @@ const userInfoSchema = mongoose.Schema({
         type: Date,
         required: true,
     },
-    contact: {
-        address: {
-            city: {
-                type: String,
-                required: true
-            },
-            street: {
-                type: String,
-                required: false
-            }
-        },
-        number: {
-            type: Number,
-            required: true
-        }
+    contactNumber: {
+        type: Number,
+        required: true
     },
-    link:{
+    __link:{
         collectionName:{
             type: String,
             required: true
@@ -42,4 +30,5 @@ const userInfoSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("UserInfo", userInfoSchema, "userInfo");
+const UserInfo = mongoose.model("UserInfo", userInfoSchema, "userInfo");
+module.exports = UserInfo
