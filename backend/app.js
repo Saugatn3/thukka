@@ -65,16 +65,6 @@ app.patch("/:id", (req, res) => {
       console.log("UPDATED");
     });
   }
-  // Book.findOne({_id:req.params.id}, function (err,book) {
-  //   for (var field in Book.schema.paths) {
-  //     if ((field !== '_id') && (field !== '__v')) {
-  //        if (req.body[field] !== undefined) {
-  //           book[field] = req.body[field];
-  //        }
-  //     }
-  //   }
-  // })
-  //console.log(Book.schema.paths)
 });
 
 connectDB();
@@ -82,5 +72,5 @@ connectDB();
 app.use('/auth', authRouter);
 
 app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+  console.log(`App listening at http://localhost:${port}`)
+); 
