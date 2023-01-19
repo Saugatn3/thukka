@@ -17,12 +17,10 @@ function SignUp(props) {
     fname: "",
     lname: "",
     dob: null,
-    gender: null,
     email: "",
     password: "",
+    repassword: "",
     phone: null,
-    streetaddress: "",
-    city: "",
   };
   const [formValues, setFormValues] = React.useState(initialValues);
   const [formErrors, setFormErrors] = React.useState({});
@@ -59,6 +57,9 @@ function SignUp(props) {
     } else if (!regexPassword.test(values.password)) {
       errors.password = "Password must contain number, alphabet and symbol";
     }
+    if (values.password !== values.repassword) {
+      errors.repassword = "Password must match eachother";
+    }
     if (!values.dob) {
       errors.dob = "Cannot be blank";
     }
@@ -68,21 +69,12 @@ function SignUp(props) {
     if (!values.lname) {
       errors.lname = "Cannot be blank";
     }
-    if (!values.streetaddress) {
-      errors.streetaddress = "Cannot be blank";
-    }
-    if (!values.city) {
-      errors.city = "Cannot be blank";
-    }
     if (!values.phone) {
       errors.phone = "Cannot be blank";
     } else if (isNaN(values.phone)) {
       errors.phone = "Must be number";
     } else if (values.phone.length !== 10) {
       errors.phone = "Must be 10 digits";
-    }
-    if (!values.gender) {
-      errors.gender = "Cannot be blank";
     }
     return errors;
   };
@@ -91,7 +83,6 @@ function SignUp(props) {
       submitForm();
     }
   }, [formErrors]);
-
   return (
     <Dialog
       open={openSignup}
@@ -173,51 +164,8 @@ function SignUp(props) {
             </span>
           )}
         </div>
-        {/*<div className="entry gender">
-            <div className="gender">
-              <div className="gender-element">
-                <input
-                  id="gender"
-                  type="radio"
-                  value="male"
-                  name="gender"
-                  onChange={handleChange}
-                />
-                <label for="male">Male</label>
-              </div>
-              <div className="gender-element">
-                <input
-                  id="gender"
-                  type="radio"
-                  value="female"
-                  name="gender"
-                  onChange={handleChange}
-                />
-                <label for="female">Female</label>
-              </div>
-              <div className="gender-element">
-                <input
-                  id="gender"
-                  type="radio"
-                  value="other"
-                  name="gender"
-                  onChange={handleChange}
-                />
-                <label for="other">Other</label>
-              </div>
-              {formErrors.gender && (
-                <span
-                  className="error"
-                  style={{ color: "red", fontSize: "13px" }}
-                >
-                  {formErrors.gender}
-                </span>
-              )}
-            </div>
-          </div>*/}
 
         <div className="entry email">
-          {/* <label for="email">Email</label> */}
           <input
             type="email"
             id="email"
@@ -233,7 +181,6 @@ function SignUp(props) {
           )}
         </div>
         <div className="entry password">
-          {/* <label for="password">Password</label> */}
           <input
             type="password"
             id="password"
@@ -248,9 +195,24 @@ function SignUp(props) {
             </span>
           )}
         </div>
+        <div className="entry repassword">
+          <input
+            type="password"
+            id="repassword"
+            placeholder="Confirm Password"
+            name="repassword"
+            value={formValues.repassword}
+            onChange={handleChange}
+          />
+
+          {formErrors.repassword && (
+            <span className="error" style={{ color: "red", fontSize: "13px" }}>
+              {formErrors.repassword}
+            </span>
+          )}
+        </div>
 
         <div className="entry phone">
-          {/* <label for="phone">Phone Number</label> */}
           <input
             type="tel"
             id="phone"
@@ -265,43 +227,6 @@ function SignUp(props) {
             </span>
           )}
         </div>
-        {/*<div className="entry">
-          {/* <label for="address">Address</label> }
-          <div className="subentry">
-            <input
-              type="text"
-              id="streetaddress"
-              placeholder="Street"
-              name="streetaddress"
-              value={formValues.streetaddress}
-              onChange={handleChange}
-            />
-            {formErrors.streetaddress && (
-              <span
-                className="error"
-                style={{ color: "red", fontSize: "13px" }}
-              >
-                {formErrors.streetaddress}
-              </span>
-            )}
-            <input
-              type="text"
-              id="city"
-              placeholder="City"
-              name="city"
-              value={formValues.city}
-              onChange={handleChange}
-            />
-            {formErrors.city && (
-              <span
-                className="error"
-                style={{ color: "red", fontSize: "13px" }}
-              >
-                {formErrors.city}
-              </span>
-            )}
-          </div>
-        </div>*/}
         <ButtonContained btntitle="Register" Type="submit" />
       </form>
     </Dialog>
